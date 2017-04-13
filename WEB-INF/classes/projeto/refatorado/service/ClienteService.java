@@ -13,7 +13,7 @@ public class ClienteService {
 		dao = new ClienteDAO();
 	}
 	
-	public void criar(Cliente cliente){
+	public void criar(Cliente cliente) throws Exception{
 		dao.criar(cliente);
 	}
 	
@@ -29,7 +29,7 @@ public class ClienteService {
 		return dao.buscaPorId(id);
 	}
 	
-	public List<Cliente> listarTodos(){
+	public List<Cliente> listarTodos(){	
 		return dao.listarTodos();
 	}
 }

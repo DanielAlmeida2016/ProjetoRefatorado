@@ -1,5 +1,7 @@
 package projeto.refatorado.service;
 
+import java.util.List;
+
 import projeto.refatorado.dao.ProdutoDAO;
 import projeto.refatorado.model.Produto;
 
@@ -7,7 +9,12 @@ public class ProdutoService {
 	
 	private ProdutoDAO dao;
 	
-	
+	/*
+	 * Crud
+	 * Listar todos os produtos
+	 * Listar todos produto por categoria
+	 * Procurar produto pela descrição
+	 */
 	public ProdutoService(){
 		dao = new ProdutoDAO();		
 	}
@@ -28,6 +35,28 @@ public class ProdutoService {
 	public Produto carregar(long id){
 		return dao.carregar(id);
 		
+	}
+	
+	public List<Produto> listarTodosProdutos(){
+		return dao.listarTodosProdutos();
+	}
+	
+	public List<Produto> listarPorCategoria(String categoria){
+		return dao.listarPorCategoria(categoria);
+	}
+	
+	public Produto buscarDescricao(String descricao){
+		return dao.buscarDescricao(descricao);
+	}
+	
+	public void alterarQuantidadeEmEstoque(int id, int quantidade){
+		
+		int quantidadeTotal = 0;
+		int quantidadeLocal = dao.getQuantidade(quantidade);
+		
+		quantidadeTotal = quantidade + quantidadeLocal;
+		
+		dao.adicionarEstoque(quantidadeTotal, id);
 	}
 
 }

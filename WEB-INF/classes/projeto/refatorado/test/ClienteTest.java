@@ -38,7 +38,11 @@ public class ClienteTest {
 			c.setTelefone("(11) 95277589" + i);
 			c.setEmail("daniel" + i + "@hotmail.com");
 
-			cs.criar(c);
+			try {
+				cs.criar(c);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

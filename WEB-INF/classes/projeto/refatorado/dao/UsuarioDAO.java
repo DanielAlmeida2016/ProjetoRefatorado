@@ -107,7 +107,7 @@ public class UsuarioDAO {
 
 		boolean acesso = false;
 
-		String sqlSelect = "SELECT * FROM usuario WHERE usuario=? AND senha=?";
+		String sqlSelect = "SELECT usuario, senha, count(*) FROM usuario WHERE usuario=? AND senha=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -116,7 +116,7 @@ public class UsuarioDAO {
 			stm.setString(2, usuario.getSenha());
 
 			try (ResultSet rs = stm.executeQuery();) {
-				if (rs.next()) {
+				if (rs.first() && rs.getInt("count(*)") == 1) {
 					acesso = true;
 				} else {
 					acesso = false;

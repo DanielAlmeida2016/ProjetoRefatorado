@@ -17,7 +17,7 @@ public class ClienteDAO {
 	 * public ClienteDAO() { cliente = new Cliente(); }
 	 */
 
-	public void criar(Cliente cliente) {
+	public void criar(Cliente cliente) throws Exception{
 		String sqlInsert = "INSERT INTO cliente(nome, rg, cpf, telefone, email) VALUES (?, ?, ?, ?, ?);";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
