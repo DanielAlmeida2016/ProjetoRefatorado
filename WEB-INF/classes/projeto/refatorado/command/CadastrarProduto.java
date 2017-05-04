@@ -6,29 +6,31 @@ import javax.servlet.http.HttpServletResponse;
 import projeto.refatorado.model.Produto;
 import projeto.refatorado.service.ProdutoService;
 
-public class AlterarProduto implements Command {
+public class CadastrarProduto implements Command {
 
 	Produto produto;
 	ProdutoService ps;
 
-	public AlterarProduto() {
+	public CadastrarProduto() {
 
 		produto = new Produto();
 		ps = new ProdutoService();
-
 	}
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		double valorVenda = 0, valorCompra = 0;
+		int quantidade = 0;
+		String sValorVenda, sValorCompra, sQuantidade;
+
 		try {
-			produto.setId(Long.parseLong(request.getParameter("id")));
 			produto.setCategoria(request.getParameter("categoria"));
 			produto.setDescricao(request.getParameter("descricao"));
 			produto.setQuantidade(Integer.parseInt(request.getParameter("quantidade")));
 			produto.setValorCompra(Double.parseDouble(request.getParameter("valorCompra")));
 			produto.setValorVenda(Double.parseDouble(request.getParameter("valorVenda")));
 
-			ps.alterar(produto);
+			ps.criar(produto);
 
 			response.setStatus(HttpServletResponse.SC_OK);
 
