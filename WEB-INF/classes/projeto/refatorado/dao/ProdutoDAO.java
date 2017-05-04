@@ -5,26 +5,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import projeto.refatorado.model.Produto;
 
 public class ProdutoDAO {
 
-	public long criar(Produto produto) {
+	public void criar(Produto produto) {
 
-		String sqlInsert = "INSERT INTO produto(categoria, descricao, fornecedor, valorCompra, valorVenda, quantidade, imagem) VALUES (?, ?, ?, ?, ?, ?, ?);";
+		String sqlInsert = "INSERT INTO produto(categoria, descricao, valorCompra, valorVenda, quantidade, imagem) VALUES (?, ?, ?, ?, ?, ?);";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 			stm.setString(1, produto.getCategoria());
 			stm.setString(2, produto.getDescricao());
-			stm.setString(3, produto.getFornecedor());
-			stm.setDouble(4, produto.getValorCompra());
-			stm.setDouble(5, produto.getValorVenda());
-			stm.setInt(6, produto.getQuantidade());
-			stm.setBytes(7, produto.getImagem());
+			stm.setDouble(3, produto.getValorCompra());
+			stm.setDouble(4, produto.getValorVenda());
+			stm.setInt(5, produto.getQuantidade());
+			stm.setBytes(6, produto.getImagem());
 			stm.execute();
 
 			String sqlQuery = "SELECT LAST_INSERT_ID()";
@@ -39,23 +37,20 @@ public class ProdutoDAO {
 			e.printStackTrace();
 		}
 
-		return produto.getId();
-
 	}
 
 	public void alterar(Produto produto) {
-		String sqlUpdate = "UPDATE produto SET categoria=?, descricao=?, fornecedor=?, valorCompra=?, valorVenda=?, quantidade=?, imagem=?  WHERE id=?";
+		String sqlUpdate = "UPDATE produto SET categoria=?, descricao=?, valorCompra=?, valorVenda=?, quantidade=?, imagem=?  WHERE id=?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setString(1, produto.getCategoria());
 			stm.setString(2, produto.getDescricao());
-			stm.setString(3, produto.getFornecedor());
-			stm.setDouble(4, produto.getValorCompra());
-			stm.setDouble(5, produto.getValorVenda());
-			stm.setInt(6, produto.getQuantidade());
-			stm.setBytes(7, produto.getImagem());
-			stm.setLong(8, produto.getId());
+			stm.setDouble(3, produto.getValorCompra());
+			stm.setDouble(4, produto.getValorVenda());
+			stm.setInt(5, produto.getQuantidade());
+			stm.setBytes(6, produto.getImagem());
+			stm.setLong(7, produto.getId());
 			stm.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +74,7 @@ public class ProdutoDAO {
 	public Produto carregar(long id) {
 		Produto produto = new Produto();
 		produto.setId(id);
-		String sqlSelect = "SELECT categoria, descricao, fornecedor, valorCompra, valorVenda, quantidade, imagem, id FROM produto WHERE produto.id = ?";
+		String sqlSelect = "SELECT categoria, descricao, valorCompra, valorVenda, quantidade, imagem, id FROM produto WHERE produto.id = ?";
 		// usando o try with resources do Java 7, que fecha o que abriu
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -88,7 +83,6 @@ public class ProdutoDAO {
 				if (rs.next()) {
 					produto.setCategoria(rs.getString("categoria"));
 					produto.setDescricao(rs.getString("descricao"));
-					produto.setFornecedor(rs.getString("fornecedor"));
 					produto.setValorCompra(rs.getDouble("valorCompra"));
 					produto.setValorVenda(rs.getDouble("valorVenda"));
 					produto.setQuantidade(rs.getInt("quantidade"));
@@ -116,7 +110,6 @@ public class ProdutoDAO {
 				if (rs.next()) {
 					produto.setCategoria(rs.getString("categoria"));
 					produto.setDescricao(rs.getString("descricao"));
-					produto.setFornecedor(rs.getString("fornecedor"));
 					produto.setValorCompra(rs.getDouble("valorCompra"));
 					produto.setValorVenda(rs.getDouble("valorVenda"));
 					produto.setQuantidade(rs.getInt("quantidade"));
@@ -145,7 +138,6 @@ public class ProdutoDAO {
 					produto.setId(rs.getLong("id"));
 					produto.setCategoria(rs.getString("categoria"));
 					produto.setDescricao(rs.getString("descricao"));
-					produto.setFornecedor(rs.getString("fornecedor"));
 					produto.setQuantidade(rs.getInt("quantidade"));
 					produto.setValorCompra(rs.getDouble("valorCompra"));
 					produto.setValorVenda(rs.getDouble("valorVenda"));
@@ -175,7 +167,6 @@ public class ProdutoDAO {
 					produto.setId(rs.getLong("id"));
 					produto.setCategoria(rs.getString("categoria"));
 					produto.setDescricao(rs.getString("descricao"));
-					produto.setFornecedor(rs.getString("fornecedor"));
 					produto.setQuantidade(rs.getInt("quantidade"));
 					produto.setValorCompra(rs.getDouble("valorCompra"));
 					produto.setValorVenda(rs.getDouble("valorVenda"));
@@ -216,13 +207,13 @@ public class ProdutoDAO {
 		return quantidade;
 	}
 
-	public void adicionarEstoque(int quantidade, long id) {
-
+	public void adicionarEstoque(int quantidade, long prdoId) {
+		Produto produto = new Produto();
 		String sqlUpdate = "UPDATE produto set quantidade = ? where id =? ";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setInt(1, quantidade);
-			stm.setLong(2, id);
+			stm.setLong(2, produto.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
