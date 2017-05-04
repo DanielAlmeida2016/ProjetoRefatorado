@@ -59,12 +59,6 @@
 			</div>
 
 			<div class="form-group col-md-6">
-				<label for="fornecedor">Fornecedor:</label> <input type="text"
-					name="fornecedor" class="form-control" id="fornecedor"
-					placeholder="Fornecedor" required>
-			</div>
-
-			<div class="form-group col-md-6">
 				<label for="quantidade">Quantidade:</label> <input type="number"
 					name="quantidade" class="form-control" id="quantidade"
 					placeholder="Quantidade" required>

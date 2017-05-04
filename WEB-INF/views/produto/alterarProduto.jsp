@@ -68,12 +68,6 @@
 			</div>
 
 			<div class="form-group col-md-6">
-				<label for="fornecedor">Fornecedor:</label> <input type="text"
-					name="fornecedor" class="form-control" id="fornecedor"
-					placeholder="Fornecedor" value="${produto.fornecedor}" required>
-			</div>
-
-			<div class="form-group col-md-6">
 				<label for="valorCompra">Valor da Compra:</label> <input
 					type="number" name="valorCompra" class="form-control"
 					id="valorCompra" placeholder="Valor da compra"

@@ -52,11 +52,11 @@
 					<h4 class="modal-title">Atenção</h4>
 				</div>
 				<div class="modal-body">
-					<p>Deseja realmente excluir este produto?</p>
+					<p>Deseja realmente excluir este cliente?</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-					<button type="button" class="btn btn-primary"  value="${produto.id}" id="excluirProduto">Sim</button>
+					<button type="button" class="btn btn-primary" id="excluirCliente">Sim</button>
 				</div>
 			</div>
 		</div>
