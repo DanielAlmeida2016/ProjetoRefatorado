@@ -3,14 +3,13 @@ package projeto.refatorado.model;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Produto implements Serializable{
-	
+public class Produto implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String categoria;
 	private String descricao;
-	private String fornecedor;
 	private double valorCompra;
 	private double valorVenda;
 	private int quantidade;
@@ -38,14 +37,6 @@ public class Produto implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public String getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(String fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 	public double getValorCompra() {
@@ -82,9 +73,9 @@ public class Produto implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Produto [id=" + id + ", categoria=" + categoria + ", descricao=" + descricao + ", fornecedor="
-				+ fornecedor + ", valorCompra=" + valorCompra + ", valorVenda=" + valorVenda + ", quantidade="
-				+ quantidade + ", imagem=" + Arrays.toString(imagem) + "]";
+		return "Produto [id=" + id + ", categoria=" + categoria + ", descricao=" + descricao + ", valorCompra="
+				+ valorCompra + ", valorVenda=" + valorVenda + ", quantidade=" + quantidade + ", imagem="
+				+ Arrays.toString(imagem) + "]";
 	}
 
 	@Override
@@ -107,11 +98,6 @@ public class Produto implements Serializable{
 		} else if (!descricao.equals(other.descricao))
 			return false;
 		if (quantidade != other.quantidade)
-			return false;
-		if (fornecedor == null) {
-			if (other.fornecedor != null)
-				return false;
-		} else if (!fornecedor.equals(other.fornecedor))
 			return false;
 		if (id == null) {
 			if (other.id != null)
