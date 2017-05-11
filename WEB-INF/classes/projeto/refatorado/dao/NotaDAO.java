@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import projeto.refatorado.model.ItensNota;
 import projeto.refatorado.model.Nota;
 
 public class NotaDAO {
@@ -51,10 +52,15 @@ public class NotaDAO {
 		}
 	}
 
+	@SuppressWarnings("null")
 	public Nota carregarNota(long id) {
 		Nota nota = new Nota();
+		List<ItensNota> itens = null;
+		ItensNota itemNota = null;
 		nota.setId(id);
-		String sqlSelect = "SELECT data, fornecedor, cnpj, observacao, id FROM nota WHERE id = ?";
+		String sqlSelect = "select n.data, n.fornecedor, n.cnpj, n.observacao, it.qtdComprada FROM nota n "
+				+ "inner join itens_nota it on n.idNota = it.idNota " 
+				+ "inner join produto p on it.id = p.id;";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
@@ -65,7 +71,24 @@ public class NotaDAO {
 					nota.setFornecedor(rs.getString("fornecedor"));
 					nota.setCnpj(rs.getString("cnpj"));
 					nota.setObservacao(rs.getString("observacao"));
-					nota.setId(rs.getLong("id"));
+
+					try (ResultSet rs1 = stm.executeQuery();) {
+						if (rs1.next()) {
+							itemNota.setId(rs1.getLong("id"));
+							itemNota.getProduto().setCategoria(rs1.getString("categoria"));
+							itemNota.getProduto().setDescricao(rs1.getString("descricao"));
+							itemNota.getProduto().setQuantidade(rs.getInt("quantidade"));
+							itemNota.getProduto().setValorCompra(rs1.getDouble("valorCompra"));
+							itemNota.getProduto().setValorVenda(rs1.getDouble("valorVenda"));
+							itemNota.setQtdComprada(rs1.getInt("qtdComprada"));	
+							
+							itens.add(itemNota);
+							
+							nota.setItensNota(itens);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -77,8 +100,12 @@ public class NotaDAO {
 	}
 
 	public List<Nota> listarTodasNotas() {
-		List<Nota> notas = new ArrayList<Nota>();
+		List<Nota> notas = null;
+		List<ItensNota> itens = null;
+		ItensNota itemNota = null;
+		
 		String sqlSelect = "select * from nota";
+		long idNota = 0;
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery()) {
@@ -90,8 +117,28 @@ public class NotaDAO {
 					nota.setFornecedor(rs.getString("fornecedor"));
 					nota.setCnpj(rs.getString("cnpj"));
 					nota.setObservacao(rs.getString("observacao"));
+					
+					try (ResultSet rs1 = stm.executeQuery();) {
+						if (rs1.next()) {
+							itemNota.setId(rs1.getLong("id"));
+							itemNota.getProduto().setCategoria(rs1.getString("categoria"));
+							itemNota.getProduto().setDescricao(rs1.getString("descricao"));
+							itemNota.getProduto().setQuantidade(rs.getInt("quantidade"));
+							itemNota.getProduto().setValorCompra(rs1.getDouble("valorCompra"));
+							itemNota.getProduto().setValorVenda(rs1.getDouble("valorVenda"));
+							
+							itemNota.setQtdComprada(rs1.getInt("qtdComprada"));
+
+							itens.add(itemNota);
+							
+							nota.setItensNota(itens);
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 
 					notas.add(nota);
+					//notas.add(itens);
 				}
 			} catch (Exception e) {
 				throw new RuntimeException(e);

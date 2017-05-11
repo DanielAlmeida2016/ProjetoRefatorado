@@ -54,7 +54,7 @@ public class ItensNotaDAO {
 		}
 	}
 
-	public ItensNota carregarItensNota(long id) {
+	/*public ItensNota carregarItensNota(long id) {
 		ItensNota itens = new ItensNota();
 		itens.setId(id);
 		String sqlSelect = "SELECT prodId, notaId, qtdComprada, id FROM itens_nota WHERE id = ?";
@@ -76,11 +76,11 @@ public class ItensNotaDAO {
 			System.out.print(e1.getStackTrace());
 		}
 		return itens;
-	}
+	} */
 
-	public List<ItensNota> listarTodosItensNota() {
-		List<ItensNota> itens = new ArrayList<ItensNota>();
-		String sqlSelect = "select * from itens_nota";
+	/* public ArrayList<ItensNota> listarTodosItensNota(long id) {
+		ArrayList<ItensNota> itens = new ArrayList<ItensNota>();
+		String sqlSelect = "select * from itens_nota where idNota = " + id;
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlSelect);) {
 			try (ResultSet rs = stm.executeQuery()) {
@@ -88,7 +88,7 @@ public class ItensNotaDAO {
 				while (rs.next()) {
 					ItensNota in = new ItensNota();
 					in.setId(rs.getLong("id"));
-					in.setProdId(rs.getLong("prodId"));
+					//in.setProdId(rs.getLong("prodId"));
 					in.setNotaId(rs.getLong("notaId"));
 					in.setQtdComprada(rs.getInt("qtdComprada"));
 
@@ -101,6 +101,6 @@ public class ItensNotaDAO {
 			throw new RuntimeException(e);
 		}
 		return itens;
-	}
+	} */
 
 }
