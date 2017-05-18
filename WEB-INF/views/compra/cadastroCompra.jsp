@@ -19,12 +19,31 @@
 </head>
 
 <body>
+	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+		aria-labelledby="mySmallModalLabel" id="modal">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Sistema</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+					<div id="msg"></div>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class=container>
 
 		<h3>Nota Fiscal</h3>
 
-		<form id="formCadastroProduto">
+		<form id="formGerarNotaFiscal">
 
 			<div class="form-group col-md-6">
 				<label for="fornecedor">Fornecedor: </label> <input type="text"
