@@ -1,7 +1,12 @@
 package projeto.refatorado.command;
 
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import projeto.refatorado.model.Usuario;
 import projeto.refatorado.service.UsuarioService;
@@ -20,13 +25,12 @@ public class UsuarioLogin implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			if(request.getParameter("metodo").equals("valida")){
+			if (request.getParameter("metodo").equals("valida")) {
 				valida(request, response);
-			}
-			else if(request.getParameter("metodo").equals("redireciona")){
+			} else if (request.getParameter("metodo").equals("redireciona")) {
 				redireciona(request, response);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -41,6 +45,8 @@ public class UsuarioLogin implements Command {
 		boolean isUsuario = us.acesso(usuario);
 
 		if (isUsuario) {
+			HttpSession session = request.getSession();
+			session.setAttribute("usuarioLogado", usuario);
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -51,6 +57,15 @@ public class UsuarioLogin implements Command {
 	public void redireciona(HttpServletRequest request, HttpServletResponse response) {
 		
 		
+		try {
+			System.out.println("fuichamado");
+			RequestDispatcher view = request.getRequestDispatcher("principal.jsp");
+			view.forward(request, response);
+			System.out.println("fuichamado2");
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
