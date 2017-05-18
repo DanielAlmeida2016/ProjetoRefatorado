@@ -15,8 +15,7 @@ public class ItensNotaDAO {
 	
 	Produto produto;
 
-	public long gerarItensNota(long prodID, long notaId) {
-		produto = new Produto();
+	public void gerarItensNota(Produto produto, long notaId) {
 		ItensNota itens = null;
 
 		String sqlInsert = "INSERT INTO itens_nota values (prodId, notaId, qtdComprada) VALUES (?, ?, ?);";
@@ -39,7 +38,7 @@ public class ItensNotaDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return itens.getId();
+		//return itens.getId();
 	}
 
 	public void excluirItensNota(long id) {

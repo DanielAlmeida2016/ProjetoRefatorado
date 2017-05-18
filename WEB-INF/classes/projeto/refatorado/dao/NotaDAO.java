@@ -41,7 +41,7 @@ public class NotaDAO {
 	}
 
 	public void excluirNota(long id) {
-		String sqlDelete = "DELETE FROM nota WHERE id = ?";
+		String sqlDelete = "DELETE FROM nota WHERE idNota = ?";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlDelete);) {
