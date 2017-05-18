@@ -40,6 +40,7 @@
 	<a href="views/produto/cadastroProduto">Cadastro de Produto</a> </br>
 	<a href="views/produto/buscarProduto">Alterar Produto</a> </br>
 	<a href="Controller?command=ListarProdutos">Listar Produto</a> </br>
+	<a href="Controller?command=GerarNotaFiscal">Nota Fiscal</a> </br>
 
  	<script src="resource/js/jquery.min.js"></script>
  	<script src="resource/js/bootstrap.min.js"></script>
