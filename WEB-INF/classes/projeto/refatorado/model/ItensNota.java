@@ -7,7 +7,7 @@ public class ItensNota implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private Long prodId;
+	private Produto produto;
 	private Long notaId;
 	private int qtdComprada;
 	
@@ -16,12 +16,6 @@ public class ItensNota implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public Long getProdId() {
-		return prodId;
-	}
-	public void setProdId(Long prodId) {
-		this.prodId = prodId;
 	}
 	public Long getNotaId() {
 		return notaId;
@@ -35,10 +29,18 @@ public class ItensNota implements Serializable {
 	public void setQtdComprada(int qtdComprada) {
 		this.qtdComprada = qtdComprada;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Produto getProduto() {
+		return produto;
+	}
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
+	@Override
+	public String toString() {
+		return "ItensNota [id=" + id + ", produto=" + produto + ", notaId=" + notaId + ", qtdComprada=" + qtdComprada
+				+ "]";
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -58,19 +60,18 @@ public class ItensNota implements Serializable {
 				return false;
 		} else if (!notaId.equals(other.notaId))
 			return false;
-		if (prodId == null) {
-			if (other.prodId != null)
+		if (produto == null) {
+			if (other.produto != null)
 				return false;
-		} else if (!prodId.equals(other.prodId))
+		} else if (!produto.equals(other.produto))
 			return false;
 		if (qtdComprada != other.qtdComprada)
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "ItensNotas [id=" + id + ", prodId=" + prodId + ", notaId=" + notaId + ", qtdComprada=" + qtdComprada
-				+ "]";
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
+
 
 }
