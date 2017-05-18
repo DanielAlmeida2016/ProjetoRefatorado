@@ -1,9 +1,6 @@
 package projeto.refatorado.service;
 
-import java.util.List;
-
 import projeto.refatorado.dao.ItensNotaDAO;
-import projeto.refatorado.model.ItensNota;
 import projeto.refatorado.model.Produto;
 
 public class ItensNotaService {
@@ -14,20 +11,16 @@ public class ItensNotaService {
 		dao = new ItensNotaDAO();
 	}
 
-	public void gerarItensNota(long prodId, long notaId) {
-		long idItens = dao.gerarItensNota(prodId, notaId);
+	public void gerarItensNota(Produto produto, long notaId) {
+		dao.gerarItensNota(produto, notaId);
 	}
 
 	public void excluirItensNota(long id) {
 		dao.excluirItensNota(id);
 	}
 
-	public ItensNota carregarItensNota(long id) {
-		return dao.carregarItensNota(id);
-	}
-
-	public List<ItensNota> listarTodosItensNota() {
-		return dao.listarTodosItensNota();
-	}
+	/* public ArrayList<ItensNota> listarTodosItensNota(long id) {
+		return dao.listarTodosItensNota(id);
+	} */
 
 }

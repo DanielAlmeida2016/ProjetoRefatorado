@@ -1,9 +1,9 @@
 package projeto.refatorado.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import projeto.refatorado.dao.NotaDAO;
-import projeto.refatorado.model.ItensNota;
 import projeto.refatorado.model.Nota;
 import projeto.refatorado.model.Produto;
 
@@ -19,21 +19,32 @@ public class NotaService {
 		ps = new ProdutoService();
 	}
 
-	public void gerarNota(Nota nota, long prodId, int qtdComprada) {
+	public void gerarNota(Nota nota, Produto produto, int qtdComprada) {
 		long notaId = dao.gerarNota(nota);
-		ins.gerarItensNota(prodId, notaId);
-		ps.alterarQuantidadeEmEstoque(prodId, qtdComprada);
+		ins.gerarItensNota(produto, notaId);
+		ps.alterarQuantidadeEmEstoque(produto, qtdComprada);
 	}
 
-	public void excluirNota(long id) {
-		dao.excluirNota(id);
+	public void excluirNota(long idNota, long idItens) {		
+		ins.excluirItensNota(idItens);
+		dao.excluirNota(idNota);
 	}
 
 	public Nota carregarNota(long id) {
-		return dao.carregarNota(id);
+		
+		Nota nota = dao.carregarNota(id);
+		
+		//nota.setItensNota(ins.listarTodosItensNota(id));
+		
+		return nota;
 	}
 
 	public List<Nota> listarTodasNotas() {
+		
+		List<Nota> lista = new ArrayList<Nota>();
+		
+		lista = dao.listarTodasNotas();		
+		
 		return dao.listarTodasNotas();
 	}
 
