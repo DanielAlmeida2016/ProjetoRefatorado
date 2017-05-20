@@ -47,14 +47,16 @@ public class ProdutoService {
 		return dao.buscarDescricao(descricao);
 	}
 
-	public void alterarQuantidadeEmEstoque(long prodId, int quantidade) {
+	public void alterarQuantidadeEmEstoque(Produto produto, int quantidade) {
 
 		int quantidadeTotal = 0;
 		int quantidadeLocal = dao.getQuantidade(quantidade);
+		
+		long id = produto.getId();
 
 		quantidadeTotal = quantidade + quantidadeLocal;
 
-		dao.adicionarEstoque(quantidadeTotal, prodId);
+		dao.adicionarEstoque(quantidadeTotal, id);
 	}
 
 }
