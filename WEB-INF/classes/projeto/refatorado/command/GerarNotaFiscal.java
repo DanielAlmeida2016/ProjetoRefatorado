@@ -22,13 +22,13 @@ public class GerarNotaFiscal implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-
+		int quantidade = 0;
 		try {
 			nota.setCnpj(request.getParameter("cnpj"));
 			nota.setFornecedor(request.getParameter("fornecedor"));
 			nota.setObservacao(request.getParameter("observacao"));
 			produto.setId(Long.parseLong(request.getParameter("prodId")));
-			int quantidade = Integer.parseInt(request.getParameter("qtdComprada"));
+			quantidade = Integer.parseInt(request.getParameter("qtdComprada"));
 
 			ns.gerarNota(nota, produto, quantidade);
 			response.setStatus(HttpServletResponse.SC_OK);
