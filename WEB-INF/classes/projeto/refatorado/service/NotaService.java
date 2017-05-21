@@ -1,5 +1,6 @@
 package projeto.refatorado.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class NotaService {
 		ps = new ProdutoService();
 	}
 
-	public void gerarNota(Nota nota, Produto produto, int qtdComprada) {
+	public void gerarNota(Nota nota, Produto produto, int qtdComprada) throws IOException {
 		long notaId = dao.gerarNota(nota);
-		ins.gerarItensNota(produto, notaId);
+		ins.gerarItensNota(produto, notaId, qtdComprada);
 		ps.alterarQuantidadeEmEstoque(produto, qtdComprada);
 	}
 

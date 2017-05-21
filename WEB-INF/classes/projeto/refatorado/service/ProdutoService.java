@@ -50,13 +50,11 @@ public class ProdutoService {
 	public void alterarQuantidadeEmEstoque(Produto produto, int quantidade) {
 
 		int quantidadeTotal = 0;
-		int quantidadeLocal = dao.getQuantidade(quantidade);
-		
-		long id = produto.getId();
+		int quantidadeLocal = dao.getQuantidade(produto.getId());
 
 		quantidadeTotal = quantidade + quantidadeLocal;
 
-		dao.adicionarEstoque(quantidadeTotal, id);
+		dao.adicionarEstoque(quantidadeTotal, produto);
 	}
 
 }

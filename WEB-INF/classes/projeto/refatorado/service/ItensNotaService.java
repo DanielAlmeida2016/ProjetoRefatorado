@@ -1,5 +1,7 @@
 package projeto.refatorado.service;
 
+import java.io.IOException;
+
 import projeto.refatorado.dao.ItensNotaDAO;
 import projeto.refatorado.model.Produto;
 
@@ -11,8 +13,8 @@ public class ItensNotaService {
 		dao = new ItensNotaDAO();
 	}
 
-	public void gerarItensNota(Produto produto, long notaId) {
-		dao.gerarItensNota(produto, notaId);
+	public void gerarItensNota(Produto produto, long notaId, int qtdComprada) throws IOException {
+		dao.gerarItensNota(produto, notaId, qtdComprada);
 	}
 
 	public void excluirItensNota(long id) {
