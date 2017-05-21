@@ -1,7 +1,8 @@
 package projeto.refatorado.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Nota implements Serializable {
@@ -9,7 +10,7 @@ public class Nota implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
-	private Date data;
+	private Timestamp data;
 	private String fornecedor;
 	private String cnpj;
 	private String observacao;
@@ -23,11 +24,11 @@ public class Nota implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public Timestamp getData() {
 		return data;
 	}
-
-	public void setData(Date data) {
+	
+	public void setData(Timestamp data) {
 		this.data = data;
 	}
 
