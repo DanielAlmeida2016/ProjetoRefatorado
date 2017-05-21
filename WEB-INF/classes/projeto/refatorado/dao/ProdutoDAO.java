@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import projeto.refatorado.model.Cliente;
 import projeto.refatorado.model.Produto;
 
 public class ProdutoDAO {
@@ -183,14 +186,14 @@ public class ProdutoDAO {
 		return produtos;
 	}
 
-	public int getQuantidade(int id) {
+	public int getQuantidade(long id) {
 
 		int quantidade = 0;
 
-		String sqlUpdate = "Select quantidade from produto where id=?";
+		String sqlUpdate = "Select quantidade from produto where id =?";
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
-			stm.setInt(1, id);
+			stm.setLong(1, id);
 			try (ResultSet rs = stm.executeQuery()) {
 
 				if (rs.next()) {
@@ -207,17 +210,18 @@ public class ProdutoDAO {
 		return quantidade;
 	}
 
-	public void adicionarEstoque(int quantidade, long prdoId) {
-		Produto produto = new Produto();
-		String sqlUpdate = "UPDATE produto set quantidade = ? where id =? ";
+	public void adicionarEstoque(int quantidade, Produto produto) {
+		String sqlUpdate = "UPDATE produto SET quantidade=? WHERE id=?";
+
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlUpdate);) {
 			stm.setInt(1, quantidade);
 			stm.setLong(2, produto.getId());
-
-		} catch (SQLException e) {
+			stm.execute();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }

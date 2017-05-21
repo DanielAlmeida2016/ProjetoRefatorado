@@ -1,11 +1,12 @@
 package projeto.refatorado.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import projeto.refatorado.model.ItensNota;
@@ -13,13 +14,16 @@ import projeto.refatorado.model.Nota;
 
 public class NotaDAO {
 
-	public long gerarNota(Nota nota) {
+	public long gerarNota(Nota nota) throws IOException{
 
-		String sqlInsert = "INSERT INTO nota values (data, fornecedor, cnpj, observacao) VALUES (?, ?, ?, ?);";
+		String sqlInsert = "INSERT INTO nota (data, fornecedor, cnpj, observacao) VALUES (?, ?, ?, ?);";
 
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
-			stm.setDate(1, (Date) nota.getData());
+			Date data = new Date();
+			Timestamp timestamp = new Timestamp(data.getTime());
+			
+			stm.setTimestamp(1, timestamp);
 			stm.setString(2, nota.getFornecedor());
 			stm.setString(3, nota.getCnpj());
 			stm.setString(4, nota.getObservacao());
@@ -67,7 +71,7 @@ public class NotaDAO {
 			stm.setLong(1, id);
 			try (ResultSet rs = stm.executeQuery();) {
 				if (rs.next()) {
-					nota.setData(rs.getDate("data"));
+					nota.setData(rs.getTimestamp("data"));
 					nota.setFornecedor(rs.getString("fornecedor"));
 					nota.setCnpj(rs.getString("cnpj"));
 					nota.setObservacao(rs.getString("observacao"));
@@ -113,7 +117,7 @@ public class NotaDAO {
 				while (rs.next()) {
 					Nota nota = new Nota();
 					nota.setId(rs.getLong("id"));
-					nota.setData(rs.getDate("data"));
+					nota.setData(rs.getTimestamp(	"data"));
 					nota.setFornecedor(rs.getString("fornecedor"));
 					nota.setCnpj(rs.getString("cnpj"));
 					nota.setObservacao(rs.getString("observacao"));

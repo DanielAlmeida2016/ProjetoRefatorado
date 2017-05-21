@@ -1,5 +1,6 @@
 package projeto.refatorado.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,16 +16,15 @@ public class ItensNotaDAO {
 	
 	Produto produto;
 
-	public void gerarItensNota(Produto produto, long notaId) {
-		ItensNota itens = null;
+	public long gerarItensNota(Produto produto, long notaId, int qtdComprada) throws IOException{
+		String sqlInsert = "INSERT INTO itens_nota (prodId, notaId, qtdComprada) VALUES (?, ?, ?);";
 
-		String sqlInsert = "INSERT INTO itens_nota values (prodId, notaId, qtdComprada) VALUES (?, ?, ?);";
-
+		ItensNota itens = new ItensNota();
 		try (Connection conn = ConnectionFactory.obtemConexao();
 				PreparedStatement stm = conn.prepareStatement(sqlInsert);) {
 			stm.setLong(1, produto.getId());
 			stm.setLong(2, notaId);
-			stm.setInt(3, produto.getQuantidade());
+			stm.setInt(3, qtdComprada);
 			stm.execute();
 
 			String sqlQuery = "SELECT LAST_INSERT_ID()";
@@ -38,7 +38,7 @@ public class ItensNotaDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		//return itens.getId();
+		return itens.getId();
 	}
 
 	public void excluirItensNota(long id) {
